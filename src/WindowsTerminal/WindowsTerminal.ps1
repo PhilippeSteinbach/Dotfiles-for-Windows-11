@@ -1,11 +1,10 @@
 function Set-OhMyPosh-Theme {
   $DotfilesOhMyPoshThemePath = Join-Path -Path $DotfilesWorkFolder -ChildPath "WindowsTerminal" | Join-Path -ChildPath ".oh-my-posh-custom-theme.omp.json";
 
-  Write-Host "Coping Oh My Posh custom theme:" -ForegroundColor "Green";
-
-  Copy-Item $DotfilesOhMyPoshThemePath -Destination $env:UserProfile;
-
-  Write-Host "Oh My Posh theme was successfully created." -ForegroundColor "Green";
+  Write-Host "Setting Oh My Posh theme path in PowerShell profile." -ForegroundColor "Green";
+  
+  $initCommand = "oh-my-posh init pwsh --config `"$DotfilesOhMyPoshThemePath`" | Invoke-Expression"
+  Add-Content -Path $Profile -Value $initCommand
 }
 
 function Set-PowerShell-Profile {
@@ -16,13 +15,13 @@ function Set-PowerShell-Profile {
     New-Item -Path $Profile -ItemType "file" -Force;
   }
   
-  Write-Host "Coping PowerShell profile:" -ForegroundColor "Green";
-  Copy-Item $DotfilesWindowsTerminalProfilePath -Destination $Profile;
+  Write-Host "Copying PowerShell profile:" -ForegroundColor "Green";
+  Copy-Item $DotfilesWindowsTerminalProfilePath -Destination $Profile -Force;
+  
+  Set-OhMyPosh-Theme
   
   Write-Host "Activating PowerShell profile:" -ForegroundColor "Green";
   . $Profile;
-
-  Write-Host "PowerShell profile was successfully created." -ForegroundColor "Green";
 }
 
 function Set-WindowsTerminal-Settings {

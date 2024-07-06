@@ -12,7 +12,7 @@ Import-Module "oh-my-posh";
 Import-Module "posh-git";
 Import-Module "Terminal-Icons";
 Import-Module "PSReadLine";
-Set-PoshPrompt -Theme "~/.oh-my-posh-custom-theme.omp.json";
+oh-my-posh init pwsh --config "~/.oh-my-posh-custom-theme.omp.json" | Invoke-Expression
 
 ################################################################################
 #                                  PSReadLine                                  #
